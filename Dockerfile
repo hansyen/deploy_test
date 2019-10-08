@@ -9,4 +9,4 @@ LABEL MAINTAINER Hans Yen <Hans@smartfun.com.tw>
 RUN apt-get update -y
 
 # 透過 apt-get 安裝 python-pip, build-essential
-RUN apt-get install -y python3-pip build-essential unixodbc-dev git
+RUN apt-get install -y python3-pip build-essential unixodbc-dev git docker.io
