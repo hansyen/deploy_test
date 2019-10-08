@@ -1,7 +1,7 @@
 node{
     def appName = 'deploy_test'
     def tag = "v_${env.BUILD_NUMBER}"
-    def img = "${appName}-${env.BRANCH_NAME}"
+    def img = "${appName}_${env.BRANCH_NAME}"
     def imgWithTag = "${img}:${tag}"
 
     checkout scm
