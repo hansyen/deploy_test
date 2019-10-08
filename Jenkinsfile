@@ -6,7 +6,12 @@ node{
 
     checkout scm
 
-    label 'docker'
+    agent {
+        docker {
+            image 'maven:3-alpine'
+            label 'docker'
+        }
+    }
 
     stage '建立映像檔'
     sh("docker build -t ${imgWithTag} .")
