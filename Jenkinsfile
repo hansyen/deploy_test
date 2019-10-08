@@ -6,6 +6,8 @@ node{
 
     checkout scm
 
+    label 'docker'
+
     stage '建立映像檔'
     sh("docker build -t ${imgWithTag} .")
 
