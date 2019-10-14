@@ -1,0 +1,16 @@
+# service.yaml
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: deploy-test
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+  type: NodePort
+  selector:
+    app: ithome
+    env: current   # 我們會在 Jenkins 裡替換成對應的環境

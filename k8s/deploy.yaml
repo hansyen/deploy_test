@@ -1,0 +1,28 @@
+# deploy.yaml
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: deploy-test
+spec:
+  replicas: 3
+  template:
+    metadata:
+      name: deploy-test
+      labels:
+        app: deploy-test
+        env: current   # 我們會在 Jenkins 裡替換成對應的環境
+    spec:
+      containers:
+      - name: deploy-test
+        image: ohya/image   # 我們會在 Jenkins 裡替換成對應的映像檔
+        resources:
+          limits:
+            memory: 0
+            cpu: 0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          protocol: TCP
+      restartPolicy: Always
