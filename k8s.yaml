@@ -1,6 +1,3 @@
-# deploy.yaml
-
----
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -9,14 +6,12 @@ spec:
   replicas: 3
   template:
     metadata:
-      name: deploy-test
       labels:
         app: deploy-test
-        env: current   # 我們會在 Jenkins 裡替換成對應的環境
     spec:
       containers:
       - name: deploy-test
-        image: ohya/image   # 我們會在 Jenkins 裡替換成對應的映像檔
+        image: ohya/<image>
         resources:
           limits:
             memory: 0
