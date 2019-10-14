@@ -1,12 +1,28 @@
-# Dockerfile
-FROM ubuntu
-FROM nginx
+FROM jenkins/jenkins:lts
+USER root
 
-# Maintainer info
-LABEL MAINTAINER Hans Yen <Hans@smartfun.com.tw>
+# install docker
+RUN apt-get update && apt-get -y install \
+     apt-transport-https \
+     ca-certificates \
+     curl \
+     gnupg2 \
+     software-properties-common
 
-# 透過 apt-get 更新
-RUN apt-get update -y
+RUN curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg | apt-key add -
+RUN add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
+   $(lsb_release -cs) \
+   stable"
+RUN apt-get update && apt-get install -y docker-ce
+RUN usermod -aG docker jenkins
 
-# 透過 apt-get 安裝 python-pip, build-essential
-RUN apt-get install -y python3-pip build-essential unixodbc-dev git
+# install kubectl
+RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl; chmod +x ./kubectl; mv ./kubectl /usr/local/bin/kubectl
+
+# Setting the number of executors
+# COPY executors.groovy /usr/share/jenkins/ref/init.groovy.d/executors.groovy
+
+# Install default plugins
+# COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
+# RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
